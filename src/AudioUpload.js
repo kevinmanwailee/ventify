@@ -49,8 +49,8 @@ function AudioUpload(username){
                         
                         // Reset upload prompts
                         setProgress(0);
-                        setCaption("");
-                        setAudio(null);
+                        setCaption('');
+                        //setAudio(null);
                     })
 
             }

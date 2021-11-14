@@ -11,12 +11,14 @@
 
 /*Keeps header image size*/
 .app__header{
-  max-width: 500px;
   max-height: 100px;
   background-color: white;
   padding: 20px;  
   border-bottom: 1px solid lightgray;
   object-fit: contain;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .app__signup{
@@ -38,4 +40,11 @@
   background-color: white;
   width: 400px;
   padding: 20px;
+}
+
+.post-center{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
 }
