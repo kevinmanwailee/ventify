@@ -11,8 +11,15 @@
 
 /*Keeps header image size*/
 .app__header{
+  max-width: 500px;
+  max-height: 100px;
   background-color: white;
   padding: 20px;  
   border-bottom: 1px solid lightgray;
   object-fit: contain;
+}
+
+.app__signup{
+  display: flex;
+  flex-direction: column;
 }
