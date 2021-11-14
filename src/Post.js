@@ -2,7 +2,7 @@ import React from 'react';
 import './Post.css';
 import Avatar from "@material-ui/core/Avatar";
 
-function Post({username, caption, imageUrl}){
+function Post({username, caption, audioUrl}){
     return(
         <div className ="post">
             <div className="post__header">
@@ -16,10 +16,9 @@ function Post({username, caption, imageUrl}){
 
             {/* head -> avatar + username*/}
 
-            {/* TODO
-            *  CHANGE IMAGE TO AUDIO FILE 
-            */}
-            <img className="post__image" src={imageUrl}></img>
+            <audio controls autoplay>
+                <source className="post__audio" src={audioUrl} type="audio/mp3"></source>
+            </audio>
             {/*image */}
 
             <h4 className="post__text"><strong>{caption}</strong></h4>
