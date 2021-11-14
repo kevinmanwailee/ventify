@@ -16,7 +16,7 @@ function Post({username, caption, audioUrl}){
 
             {/* head -> avatar + username*/}
 
-            <audio controls autoplay>
+            <audio controls>
                 <source className="post__audio" src={audioUrl} type="audio/mp3"></source>
             </audio>
             {/*image */}

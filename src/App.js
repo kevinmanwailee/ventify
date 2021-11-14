@@ -1,12 +1,13 @@
-import React, {useState, useEffect} from 'react';
 import './App.css';
+import React, {useState, useEffect} from 'react';
 import Post from './Post';
 import { db, auth } from './Firebase';
-import { makeStyles } from '@material-ui/core/styles';
+//import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { Button, Input } from '@material-ui/core';
+import AudioUpload from './AudioUpload';
 
-function getModalStyle(){
+/*function getModalStyle(){
   const top = 50;
   const left = 50;
 
@@ -23,18 +24,18 @@ const useStyles = makeStyles((theme) => ({
     posistion: 'absolute',
     //top: '50%',
     //left: '50%',
-    transform: 'translate(100%, 100%)',
+    transform: 'translate(-50%, -50%)',
     width: 300,
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
-}));
+}));*/
 
 function App() {
-  const classes = useStyles();
-  const [modalStyle] = useState(getModalStyle);
+  //const classes = useStyles();
+  //const [modalStyle] = useState(getModalStyle);
   // used to store posts
   // posts is a variable
   const [posts, setPosts] = useState([]);
@@ -69,7 +70,7 @@ function App() {
   useEffect(() => {
     db.collection('posts').onSnapshot(snapshot => {
       // runs everytime a post is added
-      setPosts(snapshot.docs.map(doc => doc.data({
+      setPosts(snapshot.docs.map((doc, index) => doc.data({
         id: doc.id,
         post: doc.data()
       })));
@@ -103,11 +104,27 @@ function App() {
 
   return (
     <div className="app">
-      `<Modal
+
+      {/*Caption input */}
+      {/*File picker */}
+      {/*Post button */}
+
+      {/*If no user is active, don't break*/}
+      {user?.displayName ?(
+        <AudioUpload username={user.displayName}/>
+
+      ): (
+        <h3>Login to upload</h3>
+      )}
+      
+        
+      <Modal
         open={open}
         onClose={() => setOpen(false)}
       >
-        <div style={modalStyle} className={classes.paper}>
+        {/* <div style={modalStyle} className={classes.paper}> */}
+        <div className="modal-overlay">
+          <div className="modal-card">
           <form className="app__signup">
             <center>
               <img 
@@ -117,25 +134,26 @@ function App() {
               />
             </center>
             <Input
-              placeholder="username"
+              placeholder="Username"
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               />
             <Input
-              placeholder="email"
+              placeholder="Email"
               type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               />
             <Input
-              placeholder="password"
+              placeholder="Password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               />
             <Button onClick={signUp}>Submit</Button>
           </form>
+        </div>
         </div>
       </Modal>
 
@@ -144,30 +162,33 @@ function App() {
         open={openSignIn}
         onClose={() => setOpenSignIn(false)}
       >
-        <div style={modalStyle} className={classes.paper}>
-          <form className="app__signup">
-            <center>
-              <img 
-                className="app__headerImage"
-                src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
-                alt=""
-              />
-            </center>
-            
-            <Input
-              placeholder="email"
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              />
-            <Input
-              placeholder="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              />
-            <Button onClick={signIn}>Sign In</Button>
-          </form>
+
+        <div className="modal-overlay">
+          <div className="modal-card">
+            <form className="app__signup">
+              <center>
+                <img 
+                  className="app__headerImage"
+                  src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+                  alt=""
+                />
+              </center>
+              
+              <Input
+                placeholder="Email"
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                />
+              <Input
+                placeholder="Password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                />
+              <Button onClick={signIn}>Sign In</Button>
+            </form>
+          </div>
         </div>
       </Modal>
       <div className="app__header">
@@ -194,8 +215,8 @@ function App() {
       <h1> Ventify</h1>
 
       {
-        posts.map(post =>(
-          <Post username={post.username} caption={post.caption} imageUrl={post.imageUrl}></Post>
+        posts.map((post, index) =>(
+          <Post key={index} username={post.username.username} caption={post.caption} audioUrl={post.audioUrl}></Post>
         ))
       }
       {/*Posts */}
