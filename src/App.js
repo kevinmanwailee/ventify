@@ -3,9 +3,11 @@ import React, {useState, useEffect} from 'react';
 import Post from './Post';
 import { db, auth } from './Firebase';
 import Modal from '@material-ui/core/Modal';
-import { Button, Input } from '@material-ui/core';
+import { Button, Input, MuiThemeProvider, createMuiTheme  } from '@material-ui/core';
+
 import { Backup as UploadIcon } from "@material-ui/icons";
 import AudioUpload from './AudioUpload';
+import logo from './ventify.png';
 
 function App() {
   // used to store posts
@@ -18,6 +20,16 @@ function App() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
+  const greenTheme = createMuiTheme({ palette: {
+      primary: {
+        main:'#284b41'
+      },
+      secondary:{
+        main:'#cc4949'
+      }
+    }
+  })
+
 
   // Checks user login
   useEffect(() => {
@@ -81,6 +93,7 @@ function App() {
   }
 
   return (
+    <MuiThemeProvider theme={greenTheme}>
     <div className="app">
 
       {/*If no user is active, don't break*/}
@@ -108,11 +121,14 @@ function App() {
           <div className="modal-card">
           <form className="app__signup">
             <center>
-              <img 
-                className="app__headerImage"
-                src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
-                alt=""
-              />
+              <div>
+                <img 
+                  style={{width:"100%", height:"auto"}}
+                  className="app__headerImage"
+                  src={logo}
+                  alt=""
+                />
+              </div>
             </center>
             <Input
               placeholder="Username"
@@ -148,11 +164,14 @@ function App() {
           <div className="modal-card">
             <form className="app__signup">
               <center>
-                <img 
-                  className="app__headerImage"
-                  src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
-                  alt=""
-                />
+                <div>
+                  <img 
+                    style={{width:"100%", height:"auto"}}
+                    className="app__headerImage"
+                    src={logo}
+                    alt=""
+                  />
+                </div>
               </center>
               
               <Input
@@ -175,30 +194,32 @@ function App() {
       <div className="app__header">
         <img 
           className="app_headerImage"
-          /* TODO:
-          *  Change LOGO
-          */
-          src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+          
+          src={logo}
           alt=""
           ></img>
       {user? (
         <>
-          <Button
-            startIcon={<UploadIcon/>}
-            color="primary"
-            variant="contained"
-            onClick={() => setOpenUpload(true)}
-            >
-              Upload
-          </Button>
-          <Button variant="contained" color="secondary"onClick={() => auth.signOut()}>Logout</Button>
+          <div>
+            <Button
+              startIcon={<UploadIcon/>}
+              color="primary"
+              variant="contained"
+              onClick={() => setOpenUpload(true)}
+              >
+                Upload
+            </Button>
+          </div>
+          <div style={{width:"271px", textAlign:"right"}}>
+            <Button variant="contained" color="secondary" onClick={() => auth.signOut()}>Logout</Button>
+          </div>
           </>
       ): (
         <div style={{ display:"flex", flexDirection:"row"}}>
           <div style={{marginRight:"5px"}}>
             <Button variant="contained" color="primary" onClick={() => setOpenSignIn(true)}>Log in</Button>
           </div>
-          <div style={{marginLeft:"5px"}}>
+          <div style={{marginLeft:"5px", background:"white", borderRadius: "5px" }}>
             <Button variant="outlined" color="primary" onClick={() => setOpen(true)}>Sign up</Button>
           </div>
         </div>
@@ -212,6 +233,7 @@ function App() {
       }
     </div>
     </div>
+    </MuiThemeProvider>
   );
 }
 

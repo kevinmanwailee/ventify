@@ -63,7 +63,6 @@ function AudioUpload(props){
 
     return(
         <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-            <progress value={progress} max="100" style={{ width: "100%", marginBottom:"10px" }}/>
             <input style={{ width: "80%", marginBottom: "10px"}} type="text" placeholder="Enter a caption ..." onChange={event => setCaption(event.target.value)} ></input>
             <input style={{marginBottom: "10px"}}type="file" onChange={handleChange}></input>
 
@@ -74,7 +73,8 @@ function AudioUpload(props){
             onClick={handleUpload}
             >
               Upload
-          </Button>
+            </Button>
+            <progress value={progress} max="100" style={{ width: "100%", marginTop:"10px" }}/>
         </div>
     )
 }

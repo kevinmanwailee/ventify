@@ -4,7 +4,7 @@
 
 /*Change header background colour to slight grey*/
 .app {
-  background-color: #fafafa;
+  background-color: #f6c5be;
   height: 100vh;
   
 }
@@ -12,13 +12,19 @@
 /*Keeps header image size*/
 .app__header{
   max-height: 100px;
-  background-color: white;
+  background-color: #539e8a;
   padding: 20px;  
   border-bottom: 1px solid lightgray;
   object-fit: contain;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+}
+
+.app__header > img {
+  height: 80px;
+  width:auto;
 }
 
 .app__signup{
@@ -27,7 +33,6 @@
 }
 
 .modal-overlay{
-  background-color: grey;
   margin: 0;
 	position: absolute;
 	top: 50%;
@@ -37,7 +42,8 @@
 }
 
 .modal-card{
-  background-color: white;
+  background-color: #539e8a;
+  border-radius: 20px;
   width: 400px;
   padding: 20px;
 }
