@@ -207,7 +207,7 @@ function App() {
       <div className="post-center">
       {
         posts.map((post, index) =>(
-          <Post key={index} username={post.username.username} caption={post.caption} audioUrl={post.audioUrl} ></Post>
+          <Post key={index} username={post.username} caption={post.caption} audioUrl={post.audioUrl} ></Post>
         ))
       }
     </div>
