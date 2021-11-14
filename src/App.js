@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     posistion: 'absolute',
     //top: '50%',
     //left: '50%',
-    transform: 'translate(50%, 50%)',
+    transform: 'translate(100%, 100%)',
     width: 300,
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
@@ -87,11 +87,23 @@ function App() {
       })
     })
     .catch((error) => alert(error.message));
+
+    setOpen(false);
+  }
+
+  const signIn= (event) => {
+    event.preventDefault();
+
+    auth
+    .signInWithEmailAndPassword(email, password)
+    .catch((error) => alert(error.message));
+
+    setOpenSignIn(false);
   }
 
   return (
     <div className="app">
-      <Modal
+      `<Modal
         open={open}
         onClose={() => setOpen(false)}
       >
@@ -127,6 +139,37 @@ function App() {
         </div>
       </Modal>
 
+
+      <Modal
+        open={openSignIn}
+        onClose={() => setOpenSignIn(false)}
+      >
+        <div style={modalStyle} className={classes.paper}>
+          <form className="app__signup">
+            <center>
+              <img 
+                className="app__headerImage"
+                src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+                alt=""
+              />
+            </center>
+            
+            <Input
+              placeholder="email"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              />
+            <Input
+              placeholder="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              />
+            <Button onClick={signIn}>Sign In</Button>
+          </form>
+        </div>
+      </Modal>
       <div className="app__header">
         <img 
           className="app_headerImage"
@@ -148,7 +191,7 @@ function App() {
       )}
 
 
-      <h1> Hello clever programmers Let's build an instagram clone with react</h1>
+      <h1> Ventify</h1>
 
       {
         posts.map(post =>(
