@@ -1,10 +1,11 @@
 import { Button } from '@material-ui/core';
 import React, { useState } from 'react';
+import { Backup as UploadIcon } from "@material-ui/icons";
 import { storage, db } from "./Firebase";
 import firebase from "firebase/compat/app";
 import "firebase/compat"
 
-function AudioUpload(username){
+function AudioUpload(props){
     const [audio, setAudio] = useState(null);
     const [progress, setProgress] = useState(0);
     const [caption, setCaption] = useState('');
@@ -38,19 +39,22 @@ function AudioUpload(username){
                     .ref("audios")
                     .child(audio.name)
                     .getDownloadURL()
-                    .then(url =>{
+                    .then(async url =>{
                         // post audio file inside db
-                        db.collection("posts").add({
+                        await db.collection("posts").add({
                             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                             caption: caption,
                             audioUrl: url,
-                            username: username,
+                            username: props.username,
                         });
                         
                         // Reset upload prompts
                         setProgress(0);
                         setCaption('');
-                        //setAudio(null);
+                        setAudio(null);
+
+                        props.onClose();
+                        window.location.reload();
                     })
 
             }
@@ -58,15 +62,19 @@ function AudioUpload(username){
     }
 
     return(
-        <div>
-            <progress  value={progress} max="100"/>
-            <input type="text" placeholder="Enter a caption ..." onChange={event => setCaption(event.target.value)} ></input>
-            <input type="file" onChange={handleChange}></input>
+        <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+            <progress value={progress} max="100" style={{ width: "100%", marginBottom:"10px" }}/>
+            <input style={{ width: "80%", marginBottom: "10px"}} type="text" placeholder="Enter a caption ..." onChange={event => setCaption(event.target.value)} ></input>
+            <input style={{marginBottom: "10px"}}type="file" onChange={handleChange}></input>
 
-            {/* Material UI Button*/}
-            <Button className="audioupload__button" onClick={handleUpload}>
-                Upload
-            </Button>
+            <Button
+            startIcon={<UploadIcon/>}
+            color="primary"
+            variant="contained"
+            onClick={handleUpload}
+            >
+              Upload
+          </Button>
         </div>
     )
 }

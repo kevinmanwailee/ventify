@@ -91,7 +91,7 @@ function App() {
           >
             <div className="modal-overlay">
               <div className="modal-card">
-                <AudioUpload username={user.displayName}/>
+                <AudioUpload username={user.displayName} onClose={() => setOpenUpload(false)}/>
               </div>
             </div>
         </Modal>
@@ -191,12 +191,16 @@ function App() {
             >
               Upload
           </Button>
-          <Button onClick={() => auth.signOut()}>Logout</Button>
+          <Button variant="contained" color="secondary"onClick={() => auth.signOut()}>Logout</Button>
           </>
       ): (
-        <div>
-          <Button onClick={() => setOpenSignIn(true)}>Log in</Button>
-          <Button onClick={() => setOpen(true)}>Sign up</Button>
+        <div style={{ display:"flex", flexDirection:"row"}}>
+          <div style={{marginRight:"5px"}}>
+            <Button variant="contained" color="primary" onClick={() => setOpenSignIn(true)}>Log in</Button>
+          </div>
+          <div style={{marginLeft:"5px"}}>
+            <Button variant="outlined" color="primary" onClick={() => setOpen(true)}>Sign up</Button>
+          </div>
         </div>
       )}
       </div>
